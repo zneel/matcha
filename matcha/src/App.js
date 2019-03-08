@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import Routes from './Routes';
+import NavBar from './components/NavBar';
 import './App.css';
-import LoginPage from './AuthScreen/LoginPage';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <LoginPage />
+      <div className="App container">
+        <NavBar />
+        <Routes />
       </div>
     );
   }
