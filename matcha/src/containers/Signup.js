@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { HelpBlock, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import LoaderButton from '../components/LoaderButton';
-import './Signup.css';
+import '../css/Signup.css';
 
 export default class Signup extends Component {
   constructor(props) {
@@ -37,11 +37,8 @@ export default class Signup extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-
     this.setState({ isLoading: true });
-
     this.setState({ newUser: 'test' });
-
     this.setState({ isLoading: false });
   };
 

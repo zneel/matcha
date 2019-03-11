@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Routes from './Routes';
 import NavBar from './components/NavBar';
-import './App.css';
+import './css/App.css';
 
 class App extends Component {
   render() {

@@ -1,3 +1,7 @@
+body {
+  background-image: url('../containers/assets/background.jpg');
+}
+
 .Home .lander {
   padding: 80px 0;
   text-align: center;
