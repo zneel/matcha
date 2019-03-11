@@ -110,20 +110,20 @@ export default class UserProfil extends React.Component {
             <div className="likedMyProfil">
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Johna</p>
               </div>
 
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Yaura</p>
               </div>
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Paura</p>
               </div>
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Nora</p>
               </div>
             </div>
             <div className="SawMyProfil" />
@@ -136,20 +136,20 @@ export default class UserProfil extends React.Component {
             <div className="likedMyProfil">
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Saula</p>
               </div>
 
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Nuka</p>
               </div>
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Pouta</p>
               </div>
               <div>
                 <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna Doe - Paris, France</p>
+                <p className="likedMyProfilName">Viola</p>
               </div>
             </div>
             <div className="SawMyProfil" />
