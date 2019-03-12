@@ -6,154 +6,47 @@ import '../css/UserProfil.css';
 export default class UserProfil extends React.Component {
   render() {
     return (
-      <div className="userProfilView">
-        <div className="photoInfoView">
-          <div className="photo">
-            <h4 className="photoTitle">Paris, France</h4>
-            <Image className="mainPhoto" src={ImagePlaceholder} />
-            <div className="secondaryPhotoView">
-              <Image className="secondaryPhoto" src={ImagePlaceholder} />
-              <Image className="secondaryPhoto" src={ImagePlaceholder} />
-              <Image className="secondaryPhoto" src={ImagePlaceholder} />
-              <Image className="secondaryPhoto" src={ImagePlaceholder} />
-            </div>
+      <div className="wrapper">
+        <div className="leftPannel">
+          <div className="photoView">
+            <Image src={ImagePlaceholder} />
           </div>
-          <div className="info">
-            <h4 className="infoTitle">
-              <u>Informations</u>
-            </h4>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                First Name:
-              </Form.Label>
-              <Col>
-                <Form.Control type="text" placeholder="John" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Last Name:
-              </Form.Label>
-              <Col>
-                <Form.Control type="text" placeholder="Doe" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Username:
-              </Form.Label>
-              <Col>
-                <Form.Control type="text" placeholder="Unknow" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Email:
-              </Form.Label>
-              <Col>
-                <Form.Control type="email" placeholder="John.Doe@test.com" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Age:
-              </Form.Label>
-              <Col>
-                <Form.Control type="number" placeholder="25" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Gender
-              </Form.Label>
-              <Col>
-                <Form.Control as="select">
-                  <option>Man</option>
-                  <option>Woman</option>
-                  <option>Other</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="textLabel" column sm="5">
-                Looking For:
-              </Form.Label>
-              <Col>
-                <Form.Control as="select">
-                  <option>Man</option>
-                  <option>Woman</option>
-                  <option>Both</option>
-                  <option>Attack Chopper</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
+          <div className="bioView">
+            <p className="bioText">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis
+              turpis magna. Vivamus rutrum orci purus, vitae venenatis enim
+              faucibus eu. Quisque id pulvinar lorem. Praesent sollicitudin
+              lobortis velit, sed fringilla ipsum pretium nec. Nullam eu felis
+              libero. Nam porttitor pretium nisi non ullamcorper. Donec ut nunc
+              ipsum.
+            </p>
           </div>
         </div>
-        <div className="bio">
-          <Form.Group>
-            <Form.Label className="textLabel">Bio</Form.Label>
-            <Form.Control as="textarea" rows="3" />
-          </Form.Group>
-        </div>
-        <div className="interest">
-          <Form.Group>
-            <Form.Label className="textLabel">Interest</Form.Label>
-            <Form.Control as="textarea" rows="3" />
-          </Form.Group>
-        </div>
-        <div className="likeSawProfil">
-          <DropdownButton
-            className="dropdown-liked"
-            variant="secondary"
-            title="People who liked my profil"
-          >
-            <div className="likedMyProfil">
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Johna</p>
-              </div>
-
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Yaura</p>
-              </div>
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Paura</p>
-              </div>
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Nora</p>
-              </div>
+        <div className="rightPannel">
+          <div className="nameView">
+            <h1 className="nameText">John Doe</h1>
+          </div>
+          <div className="statView">
+            <div className="statValue">
+              <h3>68</h3>
+              <p className="statText">Popularity</p>
             </div>
-            <div className="SawMyProfil" />
-          </DropdownButton>
-          <DropdownButton
-            className="dropdown-liked"
-            variant="secondary"
-            title="People who saw my profil"
-          >
-            <div className="likedMyProfil">
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Saula</p>
-              </div>
-
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Nuka</p>
-              </div>
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Pouta</p>
-              </div>
-              <div>
-                <Image className="likedMyProfilPhoto" src={ImagePlaceholder} />
-                <p className="likedMyProfilName">Viola</p>
-              </div>
+            <div className="statValue">
+              <h3>27</h3>
+              <p className="statText">Saw your profil</p>
             </div>
-            <div className="SawMyProfil" />
-          </DropdownButton>
+            <div className="statValue">
+              <h3>34</h3>
+              <p className="statText">Like your profil</p>
+            </div>
+            <div className="statValue">
+              <h3>12</h3>
+              <p className="statText">Match</p>
+            </div>
+          </div>
+          <div className="interestView">
+            <h3>Interest</h3>
+          </div>
         </div>
       </div>
     );
