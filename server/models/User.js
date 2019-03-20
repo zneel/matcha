@@ -1,6 +1,6 @@
 class User {
-    constructor()
-       
+    constructor(username, password, )
+
 }
 
 module.exports = User;
