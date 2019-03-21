@@ -20,8 +20,8 @@ USE `matcha` ;
 -- -----------------------------------------------------
 -- Table `matcha`.`genre`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `matcha`.`genre` (
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `matcha`.`genres` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
