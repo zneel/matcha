@@ -1,51 +1,72 @@
 import React from 'react';
-import { Row, Image, Col, Form, DropdownButton } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import ImagePlaceholder from './assets/userExemple.png';
-import '../css/UserProfil.css';
 
 export default class UserProfil extends React.Component {
   render() {
     return (
-      <div className="wrapper">
-        <div className="leftPannel">
-          <div className="photoView">
-            <Image src={ImagePlaceholder} />
-          </div>
-          <div className="bioView">
-            <p className="bioText">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis
-              turpis magna. Vivamus rutrum orci purus, vitae venenatis enim
-              faucibus eu. Quisque id pulvinar lorem. Praesent sollicitudin
-              lobortis velit, sed fringilla ipsum pretium nec. Nullam eu felis
-              libero. Nam porttitor pretium nisi non ullamcorper. Donec ut nunc
-              ipsum.
-            </p>
+      <div className="jumbotron">
+        <div
+          className="container"
+          style={{
+            textAlign: 'center'
+          }}
+        >
+          <Image src={ImagePlaceholder} height="50%" width="50%" />
+        </div>
+        <div
+          className="container"
+          style={{
+            textAlign: 'center'
+          }}
+        >
+          <div className="m-5">
+            <Image
+              src={ImagePlaceholder}
+              height="128"
+              width="128"
+              style={{ paddingRight: 2 }}
+            />
+            <Image
+              src={ImagePlaceholder}
+              height="128"
+              width="128"
+              style={{ paddingRight: 2 }}
+            />
+            <Image
+              src={ImagePlaceholder}
+              height="128"
+              width="128"
+              style={{ paddingRight: 2 }}
+            />
+            <Image
+              src={ImagePlaceholder}
+              height="128"
+              width="128"
+              style={{ paddingRight: 2 }}
+            />
           </div>
         </div>
-        <div className="rightPannel">
-          <div className="nameView">
-            <h1 className="nameText">John Doe</h1>
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            textAlign: 'center'
+          }}
+        >
+          <div className="col-lg-6" style={{ display: 'block' }}>
+            <h4>Interest</h4>
+            <p>
+              Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras
+              mattis consectetur purus sit amet fermentum.
+            </p>
           </div>
-          <div className="statView">
-            <div className="statValue">
-              <h3>68</h3>
-              <p className="statText">Popularity</p>
-            </div>
-            <div className="statValue">
-              <h3>27</h3>
-              <p className="statText">Saw your profil</p>
-            </div>
-            <div className="statValue">
-              <h3>34</h3>
-              <p className="statText">Like your profil</p>
-            </div>
-            <div className="statValue">
-              <h3>12</h3>
-              <p className="statText">Match</p>
-            </div>
-          </div>
-          <div className="interestView">
-            <h3>Interest</h3>
+          <div className="col-lg-6">
+            <h4>Biography</h4>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Maecenas
+              faucibus mollis interdum.
+            </p>
           </div>
         </div>
       </div>
