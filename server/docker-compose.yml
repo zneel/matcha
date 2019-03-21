@@ -1,9 +1,11 @@
 version: "3.7"
 services:
   db:
-    image: mariadb:latest
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./db:/var/lib/mysql
+      - ./matcha.sql:/docker-entrypoint-initdb.d/matcha.sql
     ports:
       - 3306:3306
     environment:
@@ -11,4 +13,4 @@ services:
       MYSQL_DATABASE: matcha
       MYSQL_USER: matcha
       MYSQL_PASSWORD: matcha
-    restart: unless-stopped
+    restart: always
