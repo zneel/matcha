@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: matcha
+      MYSQL_USER: matcha
+      MYSQL_PASSWORD: matcha
+    restart: unless-stopped
