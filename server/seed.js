@@ -1,39 +1,44 @@
+"use strict";
 const faker = require("faker");
-const bcrypt = require("bcrypt");
 const mysql = require("mysql");
-const saltRounds = 10;
 require("dotenv").config();
-
-const con = mysql.createConnection({
+const con = mysql.createPool({
+  connectionLimit: 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
 });
-con.query("INSERT INTO genres (name) VALUES ('homme')");
-con.query("INSERT INTO genres (name) VALUES ('femme')");
-con.query("INSERT INTO tags (name) VALUES ('PHP')");
-con.query("INSERT INTO tags (name) VALUES ('WoW')");
-con.query("INSERT INTO tags (name) VALUES ('42')");
-con.query("INSERT INTO tags (name) VALUES ('jeCpaCod3r')");
 
-for (let i = 0; i <= 1000; i++) {
-  const randomEmail = faker.internet.email();
-  const randomUsername = faker.internet.userName();
-  const randomName = faker.name.firstName();
-  const randomSurname = faker.name.lastName();
-  const randomBio = faker.lorem.paragraph();
-  const password = bcrypt.hash(faker.internet.password(), saltRounds);
-  con.query(
-    `INSERT INTO users (email, username, name, surname, password, bio, genre_id)`,
-    [
-      randomEmail,
-      randomUsername,
-      randomName,
-      randomSurname,
-      password,
-      randomBio,
-      faker.random.number(1, 2)
-    ]
-  );
-}
+const createUser = con => {
+  return new Promise((resolve, reject) => {
+    con.query(
+      `INSERT INTO users (email, username, name, surname, password, bio, genres_id) VALUES (?,?,?,?,?,?,?)`,
+      [
+        faker.internet.email(),
+        faker.internet.userName(),
+        faker.name.firstName(),
+        faker.name.lastName(),
+        faker.internet.password(),
+        faker.lorem.paragraph(),
+        faker.random.number({ min: 1, max: 2 })
+      ],
+      (err, res) => {
+        if (err) return reject(err);
+        return resolve(res);
+      }
+    );
+  });
+};
+
+const seed = num => {
+  let a = [];
+  for (let i = 0; i <= num; i++) {
+    a.push(createUser(con));
+  }
+  return Promise.all(a)
+    .then(console.log)
+    .catch(console.error);
+};
+
+seed(1000);
