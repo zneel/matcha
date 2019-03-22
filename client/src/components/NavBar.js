@@ -15,11 +15,11 @@ export default class NavBar extends React.Component {
         </Container>
 
         <Nav expand="lg">
-          <Link to="/userProfil">User</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup" className="signup-title">
             SignUp
           </Link>
+          <Link to="/account">Account</Link>
         </Nav>
       </Navbar>
     );
