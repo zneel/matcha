@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `matcha`.`images` ;
 
 CREATE TABLE IF NOT EXISTS `matcha`.`images` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `path` VARCHAR(45) NOT NULL,
+  `path` VARCHAR(255) NOT NULL,
   `is_profile` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
