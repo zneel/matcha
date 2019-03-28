@@ -1,4 +1,5 @@
 module.exports = {
+  NO_USERS: "no users",
   USER_EMAIL_EXISTS: "email already exists",
   USER_USERNAME_EXISTS: "username already exists",
   USER_NOT_FOUND: "user not found",

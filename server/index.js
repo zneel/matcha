@@ -9,7 +9,9 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/user", User);
-app.use((err, req, res, next) => res.status(err.code).json(err));
+app.use((err, req, res, next) =>
+  res.status(err.code).json({ message: err.message, code: err.code })
+);
 app.listen(process.env.PORT || 3000, () =>
   console.log("Example app listening on port 3000!")
 );

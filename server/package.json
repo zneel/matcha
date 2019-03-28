@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
+    "seed": "node seed.js",
     "db": "docker-compose up",
     "clean": "rm -rf ./db && docker-compose stop && docker-compose up"
   },

@@ -1,5 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS matcha;
 CREATE TYPE enum_genre AS ENUM ('male', 'female');
+CREATE TYPE enum_sex_orient AS ENUM ('heterosexual', 'homosexual', 'bisexual');
 CREATE TABLE IF NOT EXISTS matcha.user (
     id serial PRIMARY KEY,
     email varchar(255) NOT NULL UNIQUE,
@@ -13,6 +14,7 @@ CREATE TABLE IF NOT EXISTS matcha.user (
     password varchar(255) NOT NULL,
     bio text,
     genre enum_genre,
+    sex_orient enum_sex_orient,
     created_at timestamp DEFAULT NOW()
 );
 
@@ -47,3 +49,14 @@ CREATE TABLE IF NOT EXISTS matcha.user_has_likes (
     liked_at timestamp DEFAULT NOW(),
     PRIMARY KEY (user_likes, user_liked)
 );
+
+INSERT INTO matcha.tag (name) VALUES ('#php');
+INSERT INTO matcha.tag (name) VALUES ('#42');
+INSERT INTO matcha.tag (name) VALUES ('#born2c0de');
+INSERT INTO matcha.tag (name) VALUES ('#C');
+INSERT INTO matcha.tag (name) VALUES ('#C#');
+INSERT INTO matcha.tag (name) VALUES ('#C++');
+INSERT INTO matcha.tag (name) VALUES ('#nodejs');
+INSERT INTO matcha.tag (name) VALUES ('#sql');
+INSERT INTO matcha.tag (name) VALUES ('#norminet');
+INSERT INTO matcha.tag (name) VALUES ('#lescouysUrL@T4blE');

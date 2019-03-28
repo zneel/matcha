@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * @todo add stream json and pipe to stream pg library to increase efficiency
+ * @todo check why there is duplicates in emails and usernames
+ */
 require("dotenv").config();
 const { Pool } = require("pg");
 const https = require("https");
@@ -13,7 +17,6 @@ const config = {
   connectionTimeoutMillis: 2000
 };
 const pool = new Pool(config);
-
 const unseed = async pool => {
   try {
     let numUser = await getNumUsers(pool);
@@ -37,7 +40,6 @@ const seed = async (num, pool) => {
     res.on("end", () => {
       body = JSON.parse(body);
       body.results.forEach(async (e, i) => {
-        console.log(e);
         const { first, last } = e.name;
         const { city, coordinates } = e.location;
         const { gender, email, nat } = e;
@@ -69,9 +71,10 @@ const seed = async (num, pool) => {
 };
 
 const createUser = (pool, user) => {
+  const sex_orient = ["heterosexual", "homosexual", "bisexual"];
   const text = `INSERT INTO matcha.user
-  (id, email, username, firstname, lastname, password, genre, city, country, location, dob) 
-  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`;
+  (id, email, username, firstname, lastname, password, genre, city, country, location, dob, sex_orient) 
+  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`;
   const values = [
     user.id,
     user.email + user.id,
@@ -83,7 +86,8 @@ const createUser = (pool, user) => {
     user.city,
     user.nat,
     `(${user.coordinates.latitude},${user.coordinates.longitude})`,
-    user.date
+    user.date,
+    sex_orient[Math.floor(Math.random() * sex_orient.length)]
   ];
   return pool.query(text, values);
 };
