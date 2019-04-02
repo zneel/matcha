@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS matcha.user (
     country varchar(45),
     location point,
     password varchar(255) NOT NULL,
+    reset_password_token varchar(255),
+    confirm_email_token varchar(255),
+    is_activated boolean DEFAULT false,
     bio text,
     genre enum_genre,
     sex_orient enum_sex_orient,
@@ -32,7 +35,7 @@ CREATE TABLE IF NOT EXISTS matcha.user_has_tags (
 CREATE TABLE IF NOT EXISTS matcha.image (
     id serial PRIMARY KEY,
     path varchar(255) NOT NULL,
-    is_profile BOOLEAN DEFAULT false,
+    is_profile boolean DEFAULT false,
     user_id integer REFERENCES matcha.user ON DELETE CASCADE
 );
 

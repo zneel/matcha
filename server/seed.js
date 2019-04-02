@@ -40,6 +40,7 @@ const seed = async (num, pool) => {
     res.on("end", () => {
       body = JSON.parse(body);
       body.results.forEach(async (e, i) => {
+        i++;
         const { first, last } = e.name;
         const { city, coordinates } = e.location;
         const { gender, email, nat } = e;
@@ -73,10 +74,9 @@ const seed = async (num, pool) => {
 const createUser = (pool, user) => {
   const sex_orient = ["heterosexual", "homosexual", "bisexual"];
   const text = `INSERT INTO matcha.user
-  (id, email, username, firstname, lastname, password, genre, city, country, location, dob, sex_orient) 
-  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`;
+  (email, username, firstname, lastname, password, genre, city, country, location, dob, sex_orient) 
+  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`;
   const values = [
-    user.id,
     user.email + user.id,
     user.username + user.id,
     user.first,
@@ -93,21 +93,22 @@ const createUser = (pool, user) => {
 };
 
 const getNumUsers = pool => pool.query("SELECT COUNT(*) FROM matcha.user");
-const delUser = (pool, id) =>
-  pool.query("DELETE FROM matcha.user WHERE id = $1", [id]);
-const delImage = (pool, id) =>
-  pool.query("DELETE FROM matcha.image WHERE id = $1", [id]);
+const delUser = (pool, id) => pool.query("DELETE FROM matcha.user WHERE id = $1", [id]);
+const delImage = (pool, id) => pool.query("DELETE FROM matcha.image WHERE id = $1", [id]);
 const createImage = (pool, picture, id) => {
   return pool.query(
-    `INSERT INTO matcha.image (id, path, is_profile, user_id) VALUES ($1,$2,$3,$4)`,
-    [id, picture, true, id]
+    `INSERT INTO matcha.image (path, is_profile, user_id) VALUES ($1,$2,$3)`,
+    [picture, true, id]
   );
 };
-
+//const setIdValuesUser = pool => pool.query("SELECT setval('user_id_seq', max(id)) FROM matcha.user");
+//const setIdvaluesImage = pool => pool.query("SELECT setval('image_id_seq', max(id)) FROM matcha.image");
 (async () => {
   try {
     await unseed(pool);
     await seed(1000, pool);
+    //await setIdValuesUser(pool);
+    //await setIdvaluesImage(pool);
   } catch (e) {
     return console.error(e);
   }
