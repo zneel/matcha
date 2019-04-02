@@ -2,12 +2,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const multer  = require('multer')
 const validation = require("../services/validation/user");
 const genmd5 = require("../services/crypto");
 const User = require("../models/User");
 const mail = require("../services/mail");
-
 const consts = require("../consts");
+const upload = multer({ dest: `${process.cwd()}/uploads` })
 
 router.get("/me", (req, res, next) => {
   res.json("Hello user");
