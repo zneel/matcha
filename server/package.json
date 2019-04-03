@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "seed": "node seed.js",
+    "generate_keys": "openssl genrsa -out private.pem 2048 && openssl rsa -in private.pem -pubout > public.pub",
     "db": "docker-compose up",
     "clean": "rm -rf ./db && docker-compose stop && docker-compose up"
   },
@@ -18,10 +19,9 @@
     "compression": "^1.7.4",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
-    "faker": "^4.1.0",
     "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.1",
-    "mysql": "^2.16.0",
     "nodemailer": "^6.0.0",
     "pg": "^7.9.0"
   }

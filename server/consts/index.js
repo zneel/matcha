@@ -9,5 +9,7 @@ module.exports = {
   USER_BIO_ERROR: "bio does not match criterias",
   USER_BIO_TOO_LONG: "bio is too long",
   BAD_REQUEST: "wrong body or no body",
-  CANNOT_CONFIRM: "can't confirm the user"
+  CANNOT_CONFIRM: "can't confirm the user",
+  UNAUTHORIZED: "not authorized",
+  SERVER_ERROR: "internal server error"
 };

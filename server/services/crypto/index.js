@@ -1,12 +1,25 @@
 "use strict";
 const crypto = require("crypto");
+const jwt = require('jsonwebtoken');
+const fs = require("fs");
 
-const genmd5  = () => {
-  return new Promise((resolve, reject) => {
-    const randomBytes = crypto.randomBytes(70);
-    const hash = crypto.createHash('md5', randomBytes);
-    return resolve(hash.digest('hex'));
+const genHash = () => {
+  return new Promise((resolve, _) => {
+    const hash = crypto.randomBytes(80).toString('hex');
+    return resolve(hash);
   })
 }
 
-module.exports = genmd5;
+const signJwt = payload => {
+  return new Promise((resolve, reject) => {
+    const privateKey = fs.readFileSync(`${process.cwd()}/matcha.pem`);
+    jwt.sign({data:payload}, privateKey, { algorithm: 'RS256', expiresIn: '1h' }, (err, token) => {
+        if (err) {return reject(err)}
+        return resolve(token);
+    });
+  })
+}
+module.exports = {
+  genHash,
+  signJwt
+};

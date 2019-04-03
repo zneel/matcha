@@ -56,10 +56,16 @@ const confirmUser = confirmationHash => {
     return db.query(`UPDATE matcha.user SET confirm_email_token = null, is_activated = true WHERE confirm_email_token = $1`, [confirmationHash]);
 }
 
+/**
+ * check a user for login
+ */
+const loginUser = username => db.query("SELECT * FROM matcha.user WHERE username = $1", [username]);
+
 module.exports = {
   register,
   getUser,
   updateUser,
   deleteUser,
-  confirmUser
+  confirmUser,
+  loginUser
 };
