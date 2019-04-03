@@ -59,7 +59,7 @@ const confirmUser = confirmationHash => {
 /**
  * check a user for login
  */
-const loginUser = username => db.query("SELECT * FROM matcha.user WHERE username = $1", [username]);
+const loginUser = username => db.query("SELECT * FROM matcha.user WHERE username = $1 AND is_activated = true", [username]);
 
 module.exports = {
   register,

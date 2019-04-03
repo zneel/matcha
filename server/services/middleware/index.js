@@ -5,20 +5,26 @@ const fs = require("fs");
 
 
 const checkToken = (req, res, next) => {
-  let token = req.headers['authorization'];
-  if (token.startsWith('Bearer ')) {
-    token = token.slice(7, token.length)
+  if (req.headers['authorization']) {
+    let token = req.headers['authorization'];
+    if (token.startsWith('Bearer ')) {
+      token = token.slice(7, token.length)
+    }
+    if (token) {
+      const privateKey = fs.readFile(`${process.cwd()}/public.pub`, 'utf8', (err, data) => {
+        if (err) {return next({msg:consts.SERVER_ERROR, code: 500})}
+        jwt.verify(token, data, (err, decoded) => {
+          if (err) {return next({msg:consts.UNAUTHORIZED, code:403})}
+          req.user = decoded.data;
+          delete req.user.password;
+          return next();
+        });
+      });
+    } else {
+      return next({msg:consts.BAD_REQUEST, code:400})
+    }
   }
-  const privateKey = fs.readFileSync(`${process.cwd()}/private.key`);
-  console.log(privateKey)
-  if (token) {
-    jwt.verify(token, privateKey, (err, decoded) => {
-      if (err) {return next({msg:consts.UNAUTHORIZED, code:403})}
-      req.user = decoded;
-      return next();
-    });
-  }
-  return next({msg:consts.BAD_REQUEST, code:400})
+  return next({msg:consts.UNAUTHORIZED, code:403})
 };
 
 module.exports = {

@@ -13,7 +13,9 @@ const upload = multer({ dest: `${process.cwd()}/uploads` })
 const middleware = require('../services/middleware');
 
 router.get("/me", middleware.checkToken, (req, res, next) => {
-  res.json("Hello user");
+  if (req.user) {
+    res.json(req.user);
+  }
 });
 
 router.post("/login", async (req, res, next) => {
@@ -41,11 +43,11 @@ router.post("/login", async (req, res, next) => {
   return next({ msg: consts.BAD_REQUEST, code: 400 });
 });
 
-router.post("/logout", async (req, res, next) => {
+router.post("/logout", middleware.checkToken, async (req, res, next) => {
 
 })
 
-router.get("/:id(\\d+)", async (req, res, next) => {
+router.get("/:id(\\d+)", middleware.checkToken,async (req, res, next) => {
   try {
     const user = await User.getUser(req.params.id);
     if (!user.rows[0] || user.rows.length === 0) {
@@ -58,7 +60,7 @@ router.get("/:id(\\d+)", async (req, res, next) => {
   }
 });
 
-router.get("/:limit(\\d+)/:offset(\\d+)/", async (req, res, next) => {
+router.get("/:limit(\\d+)/:offset(\\d+)/", middleware.checkToken,async (req, res, next) => {
   if (req.params.limit >= 0 || !req.params.offset >= 0) {
     try {
       const users = await User.getUsers(offset, limit);
@@ -97,7 +99,6 @@ router.post("/register", async (req, res, next) => {
         if (e.code === "23505") {
           return next({ msg: consts.USER_EXISTS, code: 409 });
         }
-        console.log(e);
         return next({ msg: consts.BAD_REQUEST, code: 400 });
       }
     }
@@ -105,11 +106,11 @@ router.post("/register", async (req, res, next) => {
   return next({ msg: consts.BAD_REQUEST, code: 400 });
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", middleware.checkToken,(req, res, next) => {
   res.json("Hello user");
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", middleware.checkToken,(req, res, next) => {
   res.json("Hello user");
 });
 
