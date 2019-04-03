@@ -64,6 +64,7 @@ const loginUser = username => db.query("SELECT * FROM matcha.user WHERE username
 module.exports = {
   register,
   getUser,
+  getUsers,
   updateUser,
   deleteUser,
   confirmUser,

@@ -5,5 +5,6 @@ const blacklistToken = (token, userId) => db.query("INSERT INTO matcha.blacklist
 const checkIfBlacklisted = token => db.query("SELECT COUNT(*) FROM matcha.blacklist_token WHERE token = $1", [token]) 
 
 module.exports = {
-  blackListToken
+  blacklistToken,
+  checkIfBlacklisted
 }
