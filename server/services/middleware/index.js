@@ -11,20 +11,23 @@ const checkToken = (req, res, next) => {
       token = token.slice(7, token.length)
     }
     if (token) {
-      const privateKey = fs.readFile(`${process.cwd()}/public.pub`, 'utf8', (err, data) => {
+      fs.readFile(`${process.cwd()}/public.pub`, 'utf8', (err, data) => {
         if (err) {return next({msg:consts.SERVER_ERROR, code: 500})}
         jwt.verify(token, data, (err, decoded) => {
           if (err) {return next({msg:consts.UNAUTHORIZED, code:403})}
           req.user = decoded.data;
           delete req.user.password;
           return next();
+          console.log('asdasd');
         });
       });
     } else {
       return next({msg:consts.BAD_REQUEST, code:400})
     }
   }
-  return next({msg:consts.UNAUTHORIZED, code:403})
+  else {
+    return next({msg:consts.UNAUTHORIZED, code:403})
+  }
 };
 
 module.exports = {

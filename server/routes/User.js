@@ -9,7 +9,7 @@ const crypto = require("../services/crypto");
 const User = require("../models/User");
 const mail = require("../services/mail");
 const consts = require("../consts");
-const upload = multer({ dest: `${process.cwd()}/uploads` })
+const upload = multer({ dest: `${process.cwd()}/uploads` });
 const middleware = require('../services/middleware');
 
 router.get("/me", middleware.checkToken, (req, res, next) => {
@@ -21,20 +21,19 @@ router.get("/me", middleware.checkToken, (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   if (req.body) {
     const {body} = req;
-    if ((body.username && validation.validateUsername(body.username)) && 
-      (body.password && validation.validatePassword(body.password))) {
+    if (body.username && body.password) {
       try {
         const user = await User.loginUser(body.username);
         if (user.rowCount === 0) {
-          return next({ msg: consts.USER_NOT_FOUND, code: 404})
+          return next({ msg:consts.UNAUTHORIZED, code: 403})
         }
         const validPassword = await bcrypt.compare(body.password, user.rows[0].password)
-        if (validPassword) {
-          const token = await crypto.signJwt(user.rows[0]);
-          return res.json({token: token});
-        } else {
-          return next({msg:consts.UNAUTHORIZED, code: 403});
-        }
+          if (validPassword) {
+            const token = await crypto.signJwt(user.rows[0]);
+            return res.json({token: token});
+          } else {
+            return next({msg:consts.UNAUTHORIZED, code: 403});
+          }
       } catch (e) {
         return next({msg: consts.SERVER_ERROR, code: 500})
       }
@@ -60,16 +59,19 @@ router.get("/:id(\\d+)", middleware.checkToken,async (req, res, next) => {
   }
 });
 
-router.get("/:limit(\\d+)/:offset(\\d+)/", middleware.checkToken,async (req, res, next) => {
-  if (req.params.limit >= 0 || !req.params.offset >= 0) {
+router.get("/:limit(\\d+)/:offset(\\d+)/", middleware.checkToken, async (req, res, next) => {
+  if (!parseInt(req.params.limit) >= 0 || !parseInt(req.params.offset) >= 0) {
+    const {limit, offset} = req.params;
     try {
-      const users = await User.getUsers(offset, limit);
-      if (!user.rows[0] || user.rows.length === 0) {
+      const users = await User.getUsers(parseInt(limit), parseInt(offset));
+      if (!users.rows || users.rows.length === 0) {
         return next({ msg: consts.NO_USERS, code: 404 });
       }
-      return res.json(users);
+      const sanitizeUsers = users.rows.map(({password, ...e}) => e);
+      return res.json(sanitizeUsers);
     } catch (e) {
-      return next({ msg: consts.BAD_REQUEST, code: 400 });
+      console.log(e)
+        return next({ msg: consts.BAD_REQUEST, code: 400 });
     }
   }
   return next({ msg: consts.BAD_REQUEST, code: 400 });
@@ -79,13 +81,13 @@ router.post("/register", async (req, res, next) => {
   if (req.body) {
     const { body } = req;
     if (
-      body.email &&
-      validation.validateEmail(body.email) &&
-      (body.username && validation.validateUsername(body.username)) &&
-      (body.firstname && validation.validateName(body.firstname)) &&
-      (body.lastname && validation.validateName(body.lastname)) &&
-      (body.password && validation.validatePassword(body.password))
-    ) {
+        body.email &&
+        validation.validateEmail(body.email) &&
+        (body.username && validation.validateUsername(body.username)) &&
+        (body.firstname && validation.validateName(body.firstname)) &&
+        (body.lastname && validation.validateName(body.lastname)) &&
+        (body.password && validation.validatePassword(body.password))
+       ) {
       try {
         const hashed = bcrypt.hash(body.password, 10);
         const confirmationHash = crypto.genHash();
