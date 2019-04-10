@@ -108,8 +108,43 @@ router.post("/register", async (req, res, next) => {
   return next({ msg: consts.BAD_REQUEST, code: 400 });
 });
 
-router.put("/:id", middleware.checkToken,(req, res, next) => {
-  res.json("Hello user");
+router.put("/:id", middleware.checkToken, async (req, res, next) => {
+  if (req.body) {
+    const { body, user } = req;
+    if (
+        (body.email &&
+         validation.validateEmail(body.email)) ||
+        (body.username && validation.validateUsername(body.username)) ||
+        (body.firstname && validation.validateName(body.firstname)) ||
+        (body.lastname && validation.validateName(body.lastname)) ||
+        (body.password && validation.validatePassword(body.password)) ||
+        (body.dob && validation.validateDob(body.dob)) ||
+        (body.city && validation.validateString(body.city)) ||
+        (body.country && validation.validateString(body.country)) ||
+        (body.lat && validation.validateLocation(body.lat)) ||
+        (body.lon && validation.validateLocation(body.lon)) ||
+        (body.bio && validation.validateString(body.bio)) ||
+        (body.genre && validation.validateGenre(body.genre)) ||
+        (body.sex_orient && validation.validateSexOrient(body.sex_orient))
+       ) {
+      try {
+        const user = await User.updateUser(body, user.id);
+        return res.json(user.rows[0])
+      } catch (e) {
+        if (e.code === "23505") {
+          return next({ msg: consts.USER_EXISTS, code: 409 });
+        }
+        return next({ msg: consts.BAD_REQUEST, code: 400 });
+      }
+    }
+  }
+  return next({ msg: consts.BAD_REQUEST, code: 400 });
+});
+
+router.post("/:id/picture", middleware.checkToken, (req, res, next) => {
+  if (req.file) {
+
+  }
 });
 
 router.delete("/:id", middleware.checkToken,(req, res, next) => {
@@ -126,6 +161,20 @@ router.get("/confirm/:confirmationHash", async (req, res, next) => {
     }
   }
   return next({ msg: consts.BAD_REQUEST, code: 400 });
+});
+
+router.post("/reset/:passwordResetHash", async (req, res, next) => {
+  if (req.params.passwordResetHash && (req.body.password && validation.validatePassword(req.body.password))) {
+    try {
+      const { passwordResetHash } = req.params;
+      const { password } = req.body;
+      const hashed = await bcrypt.hash(body.password);
+      const resetPassword = await User.changePassword(passwordResetHash, hashed);
+      return res.json(resetPassword);
+    } catch(e) {
+      return next({ msg: consts.BAD_REQUEST, code: 400 });
+    }
+  }
 });
 
 module.exports = router;
