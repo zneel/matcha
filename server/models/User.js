@@ -24,7 +24,6 @@ const getUser = userId => db.query("SELECT * FROM matcha.user WHERE id = $1", [u
  * get all users paginated
  */
 const getUsers = (limit, offset) => db.query("SELECT * FROM matcha.user LIMIT $1 OFFSET $2", [limit, offset]);
-};
 
 /**
  * update an user
