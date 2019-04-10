@@ -1,14 +1,22 @@
 version: "3.7"
 services:
   db:
-    image: mariadb:latest
+    image: postgres
     volumes:
-      - ./db:/var/lib/mysql
-    ports:
-      - 3306:3306
+      - ./db:/var/lib/postgresql/data
+      - ./matcha.sql:/docker-entrypoint-initdb.d/matcha.sql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: matcha
-      MYSQL_USER: matcha
-      MYSQL_PASSWORD: matcha
-    restart: unless-stopped
+      POSTGRES_USER: matcha
+      POSTGRES_PASSWORD: matcha
+      POSTGRES_DB: matcha
+    restart: always
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 80:8080
