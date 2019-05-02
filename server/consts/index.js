@@ -1,3 +1,4 @@
+"use strict";
 module.exports = {
   NO_USERS: "no users",
   USER_EXISTS: "user already exists",

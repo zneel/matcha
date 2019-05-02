@@ -93,8 +93,10 @@ const createUser = (pool, user) => {
 };
 
 const getNumUsers = pool => pool.query("SELECT COUNT(*) FROM matcha.user");
-const delUser = (pool, id) => pool.query("DELETE FROM matcha.user WHERE id = $1", [id]);
-const delImage = (pool, id) => pool.query("DELETE FROM matcha.image WHERE id = $1", [id]);
+const delUser = (pool, id) =>
+  pool.query("DELETE FROM matcha.user WHERE id = $1", [id]);
+const delImage = (pool, id) =>
+  pool.query("DELETE FROM matcha.image WHERE id = $1", [id]);
 const createImage = (pool, picture, id) => {
   return pool.query(
     `INSERT INTO matcha.image (path, is_profile, user_id) VALUES ($1,$2,$3)`,
