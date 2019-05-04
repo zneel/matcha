@@ -1,15 +1,12 @@
 "use strict";
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
-const multer = require("multer");
 const validation = require("../services/validation/user");
 const crypto = require("../services/crypto");
 const User = require("../models/User");
 const mail = require("../services/mail");
 const consts = require("../consts");
-const upload = multer({ dest: `${process.cwd()}/uploads` });
 const middleware = require("../services/middleware");
 
 router.get("/me", middleware.checkToken, (req, res, next) => {
@@ -38,6 +35,7 @@ router.post("/login", async (req, res, next) => {
           return next({ msg: consts.UNAUTHORIZED, code: 403 });
         }
       } catch (e) {
+        console.log(e);
         return next({ msg: consts.SERVER_ERROR, code: 500 });
       }
     }
@@ -45,6 +43,9 @@ router.post("/login", async (req, res, next) => {
   return next({ msg: consts.BAD_REQUEST, code: 400 });
 });
 
+/**
+ * @TODO implement logout
+ */
 router.post("/logout", middleware.checkToken, async (req, res, next) => {});
 
 router.get("/:id(\\d+)", middleware.checkToken, async (req, res, next) => {
@@ -74,7 +75,6 @@ router.get(
         const sanitizeUsers = users.rows.map(({ password, ...e }) => e);
         return res.json(sanitizeUsers);
       } catch (e) {
-        console.log(e);
         return next({ msg: consts.BAD_REQUEST, code: 400 });
       }
     }
@@ -145,12 +145,17 @@ router.put("/:id", middleware.checkToken, async (req, res, next) => {
   }
   return next({ msg: consts.BAD_REQUEST, code: 400 });
 });
-
+/**
+ * @TODO add picture
+ */
 router.post("/:id/picture", middleware.checkToken, (req, res, next) => {
   if (req.file) {
   }
 });
 
+/**
+ * @TODO delete user.
+ */
 router.delete("/:id", middleware.checkToken, (req, res, next) => {
   res.json("Hello user");
 });
@@ -175,7 +180,7 @@ router.post("/reset/:passwordResetHash", async (req, res, next) => {
     try {
       const { passwordResetHash } = req.params;
       const { password } = req.body;
-      const hashed = await bcrypt.hash(body.password);
+      const hashed = await bcrypt.hash(password);
       const resetPassword = await User.changePassword(
         passwordResetHash,
         hashed
